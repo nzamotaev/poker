@@ -4,10 +4,14 @@
 	Имя комнаты<input type="text" name="roomname"><br>
 	<input type="submit" value="Создать комнату">
 </form>
-<form>
+<form action="./room/" method=POST>
 	Идентификатор комнаты<input type="text" name="roomid">
 	<input type="submit" value="Войти в комнату">
 </form>
-<a href="./rooms/">Мои комнаты</a>
+<form action="./setname/" method=POST>
+	Имя пользователя<input type="text" name="name">
+	<input type="submit" value="Назначить имя">
+</form>
+<a href="./rooms/"><button>Мои комнаты</button></a>
 <br />
 
