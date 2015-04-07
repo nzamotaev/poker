@@ -30,7 +30,7 @@ def mainpage():
 def createroom():
 	accesskey=gpw.GPW(10).password
 	user_uuid= uuid_generate_and_set()
-	name= request.forms.get('roomname')
+	name= request.forms.getunicode('roomname')
 	t=(str(user_uuid),accesskey,name,)
 	db_exec_sql('insert into rooms (creator_uuid, accesskey,name) values ( ?, ?, ?)', t)
 	redirect("/poker/rooms/")
@@ -76,14 +76,14 @@ def show_room(roomid=None):
 @route('/setname/', method="POST")
 def set_name():
 	user_uuid = uuid_generate_and_set()
-	name = request.forms.get('name')
+	name = request.forms.getunicode('name')
 	db_exec_sql('insert or replace into names (uuid, name) values (?, ?)',(str(user_uuid), name,))
 	redirect("/poker/")
 
 @route('/room/<roomid>/vote/<vote>')
 def accept_vote(roomid,vote):
 	user_uuid = uuid_generate_and_set()
-	if int(vote) in range(0,11):
+	if int(vote) in range(0,len(vote_value)):
 		result = db_exec_sql('select * from rooms where accesskey = ?', (roomid,))
 		if result:
 			db_exec_sql('insert or replace into votes (voter_uuid, room_id, vote_id, value) values (?, ?, ?, ?)', (str(user_uuid), roomid, result[0][5],vote))
